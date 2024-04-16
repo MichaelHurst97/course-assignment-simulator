@@ -1,0 +1,208 @@
+{
+    "studiengang": {
+        "columns": {
+            "_pk_id": "int",
+            "status": "object",
+            "kurztext": "object",
+            "text": "object",
+            "fachbereich": "int",
+            "studiumstyp": "object",
+            "abschluss": "Int64",
+            "regelstudienzeit": "Int64",
+            "po_version": "Int64",
+	        "studienfach": "Int64"
+        },
+        "primary_key": ["_pk_id"],
+        "foreign_key": {}
+    },
+    "i_gruppe": {
+        "columns": {
+            "_pk_id": "int",
+            "text": "object",
+            "gruppierung": "Int64"
+        },
+        "primary_key": ["_pk_id"],
+        "foreign_key": {}
+    },
+    "i_pflicht": {
+        "columns": {
+            "_pk_id": "int",
+            "kuerzel": "object",
+            "text": "object"
+        },
+        "primary_key": ["_pk_id"],
+        "foreign_key": {}
+    },
+    "belegungen": {
+        "columns": {
+            "_pk_id": "int",
+            "veranstaltungs_id": "int",
+            "status": "object",
+            "wunsch_prio": "Int64",
+            "fachsemester": "Int64",
+            "matrikelnummer": "Int64",
+            "studiengangs_id": "Int64",
+            "sortierwert": "Int64",
+            "systemnachricht": "object",
+            "belegungs_verfahren": "object",
+            "ex_zwischenspeicher": "object",
+            "gruppen_id": "Int64",
+            "semester": "int",
+            "zeitstempel": "datetime64[ns]",
+            "kombo_id": "Int64",
+            "los_nummer": "Int64",
+            "erstbelegung": "object"
+        },
+        "primary_key": ["_pk_id"],
+        "foreign_key": {
+            "gruppen_id": {
+                "target_column": [{"i_gruppe": "_pk_id"}], 
+                "constraint": [""]
+            }, 
+            "veranstaltungs_id": {
+                "target_column": [{"zuordnung_stg_va_beleg": "veranstaltungs_id"}, {"veranstaltung": "_pk_id"}], 
+                "constraint": ["ON UPDATE CASCADE"]
+            },
+            "matrikelnummer": {
+                "target_column": [{"studierende": "_pk_matrikelnummer"}], 
+                "constraint": [""]
+            },
+            "kombo_id": {
+                "target_column": [{"veranstaltung_kombo": "_pk_kombo_id"}], 
+                "constraint": [""]
+            }
+        }
+    },
+    "zuordnung_stg_va_beleg": {
+        "columns": {
+            "_pk_id": "int",
+            "veranstaltungs_id": "int",
+            "studiengangs_id": "int",
+            "semester_von": "Int64",
+            "semester_bis": "Int64",
+            "fachart_id": "Int64"
+        },
+        "primary_key": ["_pk_id"],
+        "foreign_key": {
+            "veranstaltungs_id": {
+                "target_column": [{"veranstaltung": "_pk_id"}], 
+                "constraint": [""]
+            },
+            "studiengangs_id": {
+                "target_column": [{"studiengang": "_pk_id"}], 
+                "constraint": [""]
+            },
+            "fachart_id": {
+                "target_column": [{"i_pflicht": "_pk_id"}], 
+                "constraint": [""]
+            }
+        }
+    },
+    "studierende": {
+        "columns": {
+            "_pk_matrikelnummer": "int",
+            "_pk_semester": "int",
+            "_pk_studienfach": "int",
+            "fachsemester": "int",
+            "einschreibestatus": "object",
+            "hoererstatus": "object",
+            "studiumsart": "object",
+            "studiumstyp": "object",
+            "ende_grund": "Int64",
+            "hochschulsemester": "int",
+            "hochschulsemester_gewichtet": "int"
+        },
+        "primary_key": ["_pk_matrikelnummer", "_pk_semester", "_pk_studienfach"],
+        "foreign_key": {
+            "_pk_matrikelnummer": {
+                "target_column": [{"wiederauflage_master": "_pk_matrikelnummer"}], 
+                "constraint": [""]
+            }
+        }
+    },
+    "veranstaltung": {
+        "columns": {
+            "_pk_id": "int",
+            "status": "object",
+            "kurztext": "object",
+            "text": "object",
+            "sws": "float",
+            "semester": "Int64",
+            "credits": "object",
+            "uebernahmerhythmus": "Int64",
+            "belegpflicht": "object",
+            "unterrichtssprache": "object"
+        },
+        "primary_key": ["_pk_id"],
+        "foreign_key": {"_pk_id": {
+            "target_column": [{"veranstaltung_gruppengroesse": "veranstaltungs_id"}], 
+            "constraint": [""]
+            }
+        }
+    },
+    "veranstaltung_gruppengroesse": {
+        "columns": {
+            "_pk_id": "int",
+            "veranstaltungs_id": "int",
+            "gruppen_id": "Int64",
+            "max_teilnehmer": "Int64"
+        },
+        "primary_key": ["_pk_id"],
+        "foreign_key": {"gruppen_id": {
+            "target_column": [{"i_gruppe": "_pk_id"}], 
+            "constraint": [""]
+            }
+        }
+    },
+    "wiederauflage_master": {
+        "columns": {
+            "_pk_matrikelnummer": "int",
+            "text": "object",
+            "kennzeichen": "object"
+        },
+        "primary_key": ["_pk_matrikelnummer", "text"],
+        "foreign_key": {
+            "kennzeichen": {
+                "target_column": [{"i_wiederauflage_kennzeichen": "_pk_kennzeichen"}], 
+                "constraint": [""]
+            }
+        }
+    },
+    "i_wiederauflage_kennzeichen": {
+        "columns": {
+            "_pk_kennzeichen": "object",
+            "kurztext": "object",
+            "text": "object"
+        },
+        "primary_key": ["_pk_kennzeichen"],
+        "foreign_key": {}
+    },
+    "veranstaltung_kombo": {
+        "columns": {
+            "_pk_kombo_id": "int",
+            "quell_veranstaltungs_id": "int",
+            "quell_gruppen_id": "Int64",
+            "ziel_veranstaltungs_id": "int",
+            "ziel_gruppen_id": "Int64"
+        },
+        "primary_key": ["_pk_kombo_id"],
+        "foreign_key": {
+            "quell_veranstaltungs_id": {
+                "target_column": [{"veranstaltung": "_pk_id"}], 
+                "constraint": [""]
+            },
+            "ziel_veranstaltungs_id": {
+                "target_column": [{"veranstaltung": "_pk_id"}], 
+                "constraint": [""]
+            },
+            "ziel_gruppen_id": {
+                "target_column": [{"i_gruppe": "_pk_id"}], 
+                "constraint": [""]
+            },
+            "quell_gruppen_id": {
+                "target_column": [{"i_gruppe": "_pk_id"}], 
+                "constraint": [""]
+            }
+        }
+    }
+}

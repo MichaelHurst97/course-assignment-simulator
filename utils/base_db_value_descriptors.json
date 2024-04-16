@@ -1,0 +1,18 @@
+{
+	"hoererstatus": {
+		"H": "Haupthörer",
+		"N": "Nebenhörer"
+	},
+	"studiumsart": {
+		"P": "Präsenzstudium",
+		"F": "Fernstudium"
+	},
+	"studiumstyp": {
+		"V": "Vollzeit",
+		"T": "Teilzeit"
+	},
+	"erstbelegung": {
+		"J": "Ja",
+		"N": "Nein"
+	}
+}
