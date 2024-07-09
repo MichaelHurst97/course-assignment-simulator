@@ -1,10 +1,16 @@
 # Course Assignment Simulator
 ### Python / Dash App to simulate, visualize and ultimately solve rule-based course allocation problems.
 -------------
+![Screenshot of the Course Assignment Simulator](https://github.com/MichaelHurst97/course-assignment-simulator/blob/main/assets/preview_home.PNG?raw=true)
+-------------
+
 **Overview**<br />
-This app can be used to simulate course allocations via user-definable rulesets. <br />
-Assignement data must be imported first and can be done in many ways through the use of mapping files.<br />
-The course assignment simulator was created for my masters thesis at HTW Berlin.<br />
+This app is used to simulate course allocations via user-definable rulesets. <br />
+Assignment data must be imported first and can be done in many ways through the use of mapping files.<br />
+Assignment data is imported and stored in SQLite files. Simulation stats, rulesets and user settings as JSON.<br />
+The course assignment simulator was created for my masters thesis at and for HTW Berlin.<br />
+
+
 
 **Install**<br />
 Download and unpack.<br /><br />
