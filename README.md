@@ -7,7 +7,7 @@
 **Overview**<br />
 This app is used to simulate course allocations via user-definable rulesets. <br />
 Assignment data must be imported first and can be done in many ways through the use of mapping files.<br />
-Assignment data is imported and stored in SQLite files. Simulation stats, rulesets and user settings as JSON.<br />
+Assignment data is imported and stored in SQLite files. Simulation rulesets and user settings as JSON. Statistics as pickled DataFrames and JSON.<br />
 The course assignment simulator was created for my masters thesis at and for HTW Berlin.<br />
 
 
